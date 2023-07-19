@@ -3,44 +3,44 @@ using System.Collections.Generic;
 
 class Program
 {
-    const string WELCOME_MESSAGE = "Добро пожаловать в зоопарк! Выберите вольер для посещения:";
-    const string EXIT_OPTION = "0. Выйти";
-    const int EXIT = 0;
-    const string PROMPT_RETURN = "Нажмите любую клавишу для возврата в меню...";
-    const string PROMPT_CONTINUE = "Нажмите любую клавишу для продолжения...";
+    private const string WelcomeMessage = "Добро пожаловать в зоопарк! Выберите вольер для посещения:";
+    private const string ExitOption = "0. Выйти";
+    private const string PromptReturn = "Нажмите любую клавишу для возврата в меню...";
+    private const string PromptContinue = "Нажмите любую клавишу для продолжения...";
+    private const int Exit = 0;
 
     static void Main(string[] args)
     {
         Zoo zoo = new Zoo();
+        bool running = true;
 
-        while (true)
+        while (running)
         {
             Console.Clear();
-            Console.WriteLine(WELCOME_MESSAGE);
+            Console.WriteLine(WelcomeMessage);
             zoo.DisplayEnclosures();
 
-            Console.WriteLine(EXIT_OPTION);
+            Console.WriteLine(ExitOption);
 
             int userInput;
-
             if (int.TryParse(Console.ReadLine(), out userInput))
             {
-                if (userInput == EXIT)
+                if (userInput == Exit)
                 {
-                    break;
+                    running = false;
                 }
                 else
                 {
                     Console.Clear();
                     zoo.VisitEnclosure(userInput);
-                    Console.WriteLine(PROMPT_RETURN);
+                    Console.WriteLine(PromptReturn);
                     Console.ReadKey();
                 }
             }
             else
             {
-                Console.WriteLine(Zoo.INVALID_OPTION);
-                Console.WriteLine(PROMPT_CONTINUE);
+                Console.WriteLine(Zoo.InvalidOption);
+                Console.WriteLine(PromptContinue);
                 Console.ReadKey();
             }
         }
@@ -49,30 +49,27 @@ class Program
 
 public class Animal
 {
-    private string _name;
-    private string _gender;
-    private string _sound;
+    public string Name { get; private set; }
+    public string Gender { get; private set; }
+    public string Sound { get; private set; }
 
     public Animal(string name, string gender, string sound)
     {
-        _name = name;
-        _gender = gender;
-        _sound = sound;
+        Name = name;
+        Gender = gender;
+        Sound = sound;
     }
-
-    public string GetName() => _name;
-    public string GetGender() => _gender;
-    public string MakeSound() => _sound;
 }
 
 public class Enclosure
 {
-    private string _description;
     private List<Animal> _animals = new List<Animal>();
+
+    public string Description { get; private set; }
 
     public Enclosure(string description)
     {
-        _description = description;
+        Description = description;
     }
 
     public void AddAnimal(Animal animal)
@@ -80,22 +77,20 @@ public class Enclosure
         _animals.Add(animal);
     }
 
-    public string Description => _description;
-
     public void DisplayAnimalsInfo()
     {
-        Console.WriteLine(_description);
+        Console.WriteLine(Description);
 
         foreach (Animal animal in _animals)
         {
-            Console.WriteLine($"Имя: {animal.GetName()}, пол: {animal.GetGender()}, звук: {animal.MakeSound()}");
+            Console.WriteLine($"Имя: {animal.Name}, пол: {animal.Gender}, звук: {animal.Sound}");
         }
     }
 }
 
 public class Zoo
 {
-    public const string INVALID_OPTION = "Неверный выбор. Пожалуйста, выберите снова.";
+    public const string InvalidOption = "Неверный выбор. Пожалуйста, выберите снова.";
     private List<Enclosure> _enclosures = new List<Enclosure>();
 
     public Zoo()
@@ -138,7 +133,7 @@ public class Zoo
         }
         else
         {
-            Console.WriteLine(INVALID_OPTION);
+            Console.WriteLine(InvalidOption);
         }
     }
 }
