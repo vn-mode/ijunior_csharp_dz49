@@ -23,6 +23,7 @@ class Program
             Console.WriteLine(ExitOption);
 
             int userInput;
+
             if (int.TryParse(Console.ReadLine(), out userInput))
             {
                 if (userInput == Exit)
@@ -63,14 +64,14 @@ public class Animal
 
 public class Enclosure
 {
-    private List<Animal> _animals = new List<Animal>();
-
-    public string Description { get; private set; }
-
     public Enclosure(string description)
     {
         Description = description;
     }
+
+    public string Description { get; private set; }
+
+    private List<Animal> _animals = new List<Animal>();
 
     public void AddAnimal(Animal animal)
     {
@@ -95,26 +96,28 @@ public class Zoo
 
     public Zoo()
     {
-        Enclosure enclosure1 = new Enclosure("Вольер 1: обитают львы.");
-        enclosure1.AddAnimal(new Animal("Лев", "мужской", "Р-р-р"));
-        enclosure1.AddAnimal(new Animal("Львица", "женский", "Мяу"));
+        string[] enclosureDescriptions = new string[]
+        {
+            "Вольер 1: обитают львы.",
+            "Вольер 2: обитают обезьяны.",
+            "Вольер 3: обитают тигры.",
+            "Вольер 4: обитают жирафы."
+        };
 
-        Enclosure enclosure2 = new Enclosure("Вольер 2: обитают обезьяны.");
-        enclosure2.AddAnimal(new Animal("Обезьяна", "мужской", "У-у-а-а-а"));
-        enclosure2.AddAnimal(new Animal("Обезьяна", "женский", "И-и-а-а"));
+        string[] animalNames = new string[] { "Лев", "Обезьяна", "Тигр", "Жираф" };
+        string[] animalGenders = new string[] { "мужской", "женский" };
+        string[] animalSounds = new string[] { "Р-р-р", "У-у-а-а-а", "Р-р-р", "Э-э-э" };
 
-        Enclosure enclosure3 = new Enclosure("Вольер 3: обитают тигры.");
-        enclosure3.AddAnimal(new Animal("Тигр", "мужской", "Р-р-р"));
-        enclosure3.AddAnimal(new Animal("Тигрица", "женский", "Мяу"));
+        for (int i = 0; i < enclosureDescriptions.Length; i++)
+        {
+            Enclosure enclosure = new Enclosure(enclosureDescriptions[i]);
 
-        Enclosure enclosure4 = new Enclosure("Вольер 4: обитают жирафы.");
-        enclosure4.AddAnimal(new Animal("Жираф", "мужской", "Э-э-э"));
-        enclosure4.AddAnimal(new Animal("Жирафа", "женский", "Э-э-э"));
-
-        _enclosures.Add(enclosure1);
-        _enclosures.Add(enclosure2);
-        _enclosures.Add(enclosure3);
-        _enclosures.Add(enclosure4);
+            for (int j = 0; j < animalGenders.Length; j++)
+            {
+                enclosure.AddAnimal(new Animal(animalNames[i], animalGenders[j], animalSounds[i]));
+            }
+            _enclosures.Add(enclosure);
+        }
     }
 
     public void DisplayEnclosures()
