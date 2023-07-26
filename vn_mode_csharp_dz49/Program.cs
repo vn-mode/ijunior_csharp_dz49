@@ -3,24 +3,20 @@ using System.Collections.Generic;
 
 class Program
 {
-    private const string WelcomeMessage = "Добро пожаловать в зоопарк! Выберите вольер для посещения:";
-    private const string ExitOption = "0. Выйти";
-    private const string PromptReturn = "Нажмите любую клавишу для возврата в меню...";
-    private const string PromptContinue = "Нажмите любую клавишу для продолжения...";
     private const int Exit = 0;
 
     static void Main(string[] args)
     {
         Zoo zoo = new Zoo();
-        bool running = true;
+        bool isRunning = true;
 
-        while (running)
+        while (isRunning)
         {
             Console.Clear();
-            Console.WriteLine(WelcomeMessage);
+            Console.WriteLine("Добро пожаловать в зоопарк! Выберите вольер для посещения:");
             zoo.DisplayEnclosures();
 
-            Console.WriteLine(ExitOption);
+            Console.WriteLine("0. Выйти");
 
             int userInput;
 
@@ -28,20 +24,20 @@ class Program
             {
                 if (userInput == Exit)
                 {
-                    running = false;
+                    isRunning = false;
                 }
                 else
                 {
                     Console.Clear();
                     zoo.VisitEnclosure(userInput);
-                    Console.WriteLine(PromptReturn);
+                    Console.WriteLine("Нажмите любую клавишу для возврата в меню...");
                     Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine(Zoo.InvalidOption);
-                Console.WriteLine(PromptContinue);
+                Console.WriteLine("Нажмите любую клавишу для продолжения...");
                 Console.ReadKey();
             }
         }
@@ -64,14 +60,14 @@ public class Animal
 
 public class Enclosure
 {
+    private List<Animal> _animals = new List<Animal>();
+
     public Enclosure(string description)
     {
         Description = description;
     }
 
     public string Description { get; private set; }
-
-    private List<Animal> _animals = new List<Animal>();
 
     public void AddAnimal(Animal animal)
     {
@@ -91,10 +87,16 @@ public class Enclosure
 
 public class Zoo
 {
-    public const string InvalidOption = "Неверный выбор. Пожалуйста, выберите снова.";
     private List<Enclosure> _enclosures = new List<Enclosure>();
 
+    public const string InvalidOption = "Неверный выбор. Пожалуйста, выберите снова.";
+
     public Zoo()
+    {
+        InitializeZoo();
+    }
+
+    public void InitializeZoo()
     {
         string[] enclosureDescriptions = new string[]
         {
