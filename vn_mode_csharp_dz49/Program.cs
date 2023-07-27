@@ -15,7 +15,6 @@ class Program
             Console.Clear();
             Console.WriteLine("Добро пожаловать в зоопарк! Выберите вольер для посещения:");
             zoo.DisplayEnclosures();
-
             Console.WriteLine("0. Выйти");
 
             int userInput;
@@ -46,9 +45,9 @@ class Program
 
 public class Animal
 {
-    public string Name { get; private set; }
-    public string Gender { get; private set; }
-    public string Sound { get; private set; }
+    public string Name { get; }
+    public string Gender { get; }
+    public string Sound { get; }
 
     public Animal(string name, string gender, string sound)
     {
@@ -62,12 +61,12 @@ public class Enclosure
 {
     private List<Animal> _animals = new List<Animal>();
 
+    public string Description { get; }
+
     public Enclosure(string description)
     {
         Description = description;
     }
-
-    public string Description { get; private set; }
 
     public void AddAnimal(Animal animal)
     {
@@ -89,14 +88,12 @@ public class Zoo
 {
     private List<Enclosure> _enclosures = new List<Enclosure>();
 
-    public const string InvalidOption = "Неверный выбор. Пожалуйста, выберите снова.";
-
     public Zoo()
     {
         InitializeZoo();
     }
 
-    public void InitializeZoo()
+    private void InitializeZoo()
     {
         string[] enclosureDescriptions = new string[]
         {
@@ -121,6 +118,8 @@ public class Zoo
             _enclosures.Add(enclosure);
         }
     }
+
+    public static string InvalidOption { get; } = "Неверный выбор. Пожалуйста, выберите снова.";
 
     public void DisplayEnclosures()
     {
