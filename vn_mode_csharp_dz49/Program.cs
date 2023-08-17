@@ -5,7 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        const int _Exit = 0;
+        const int Exit = 0;
 
         bool isRunning = true;
         Zoo zoo = new Zoo();
@@ -21,7 +21,7 @@ class Program
 
             if (int.TryParse(Console.ReadLine(), out userInput))
             {
-                if (userInput == _Exit)
+                if (userInput == Exit)
                 {
                     isRunning = false;
                 }
@@ -90,10 +90,10 @@ public class Zoo
 
     public Zoo()
     {
-        InitializeZoo();
+        Initialize();
     }
 
-    private void InitializeZoo()
+    private void Initialize()
     {
         string[] enclosureDescriptions = new string[]
         {
