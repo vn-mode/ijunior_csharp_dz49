@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 class Program
 {
-    private const int Exit = 0;
-
     static void Main(string[] args)
     {
-        Zoo zoo = new Zoo();
+        const int _Exit = 0;
+
         bool isRunning = true;
+        Zoo zoo = new Zoo();
 
         while (isRunning)
         {
@@ -21,7 +21,7 @@ class Program
 
             if (int.TryParse(Console.ReadLine(), out userInput))
             {
-                if (userInput == Exit)
+                if (userInput == _Exit)
                 {
                     isRunning = false;
                 }
@@ -45,28 +45,28 @@ class Program
 
 public class Animal
 {
-    public string Name { get; }
-    public string Gender { get; }
-    public string Sound { get; }
-
     public Animal(string name, string gender, string sound)
     {
         Name = name;
         Gender = gender;
         Sound = sound;
     }
+
+    public string Name { get; }
+    public string Gender { get; }
+    public string Sound { get; }
 }
 
 public class Enclosure
 {
     private List<Animal> _animals = new List<Animal>();
 
-    public string Description { get; }
-
     public Enclosure(string description)
     {
         Description = description;
     }
+
+    public string Description { get; }
 
     public void AddAnimal(Animal animal)
     {
